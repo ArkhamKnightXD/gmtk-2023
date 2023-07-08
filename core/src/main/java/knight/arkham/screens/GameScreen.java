@@ -19,7 +19,6 @@ import knight.arkham.helpers.GameDataHelper;
 import knight.arkham.helpers.TileMapHelper;
 import knight.arkham.objects.Enemy;
 import knight.arkham.objects.Player;
-import knight.arkham.objects.structures.MovingStructure;
 
 import static knight.arkham.helpers.Constants.GAME_DATA_FILENAME;
 
@@ -29,10 +28,12 @@ public class GameScreen extends ScreenAdapter {
     private final World world;
     private final OrthogonalTiledMapRenderer mapRenderer;
     private final Player player;
+    private final Player player2;
     private final TileMapHelper tileMap;
     private final TextureAtlas textureAtlas;
     private boolean isDebug;
     private boolean isDisposed;
+    private boolean isPlayer1;
 
 
     public GameScreen() {
@@ -51,17 +52,20 @@ public class GameScreen extends ScreenAdapter {
         TextureRegion playerRegion = textureAtlas.findRegion("little_mario");
 
         player = new Player(new Rectangle(450, 60, 32, 32), world, playerRegion);
+        player2 = new Player(new Rectangle(550, 60, 32, 32), world, playerRegion);
 
         GameData gameDataToSave = new GameData("GameScreen", player.getWorldPosition());
         GameDataHelper.saveGameData(GAME_DATA_FILENAME, gameDataToSave);
 
-        tileMap = new TileMapHelper(world, textureAtlas, "maps/playground/test.tmx");
+        tileMap = new TileMapHelper(world, textureAtlas, "maps/grassland/land.tmx");
 
         mapRenderer = tileMap.setupMap();
 
-        isDebug = true;
+//        isDebug = true;
 
         GameJam.INSTANCE.setToDispose = false;
+
+        isPlayer1 = true;
     }
 
     @Override
@@ -77,7 +81,11 @@ public class GameScreen extends ScreenAdapter {
 
         updateCameraPosition();
 
-        player.update(deltaTime);
+        if (isPlayer1)
+            player.update(deltaTime);
+
+        else
+            player2.update(deltaTime);
 
         for (Enemy enemy : new Array.ArrayIterator<>(tileMap.getEnemies())){
 
@@ -87,14 +95,11 @@ public class GameScreen extends ScreenAdapter {
             enemy.update(deltaTime);
         }
 
-        for (MovingStructure structure : new Array.ArrayIterator<>(tileMap.getMovingStructures()))
-            structure.update(deltaTime);
-
         if (Gdx.input.isKeyJustPressed(Input.Keys.F1))
             isDebug = !isDebug;
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.F2))
-            GameJam.INSTANCE.setToDispose = true;
+            isPlayer1 = !isPlayer1;
 
         game.manageExitTheGame();
     }
@@ -153,14 +158,10 @@ public class GameScreen extends ScreenAdapter {
             game.batch.begin();
 
             player.draw(game.batch);
+            player2.draw(game.batch);
 
             for (Enemy enemy : new Array.ArrayIterator<>(tileMap.getEnemies()))
                 enemy.draw(game.batch);
-
-            for (MovingStructure structure : new Array.ArrayIterator<>(tileMap.getMovingStructures()))
-                structure.draw(game.batch);
-
-            tileMap.getFinishFlag().draw(game.batch);
 
             game.batch.end();
         }
@@ -180,12 +181,8 @@ public class GameScreen extends ScreenAdapter {
 
         player.dispose();
         textureAtlas.dispose();
-        tileMap.getFinishFlag().dispose();
 
         for (Enemy enemy : new Array.ArrayIterator<>(tileMap.getEnemies()))
             enemy.dispose();
-
-        for (MovingStructure structure : new Array.ArrayIterator<>(tileMap.getMovingStructures()))
-            structure.dispose();
     }
 }
