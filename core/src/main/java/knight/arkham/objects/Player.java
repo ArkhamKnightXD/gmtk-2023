@@ -15,7 +15,6 @@ import knight.arkham.helpers.GameDataHelper;
 
 import static knight.arkham.helpers.Constants.GAME_DATA_FILENAME;
 
-
 public class Player extends GameObject {
     private final TextureRegion jumpingRegion;
     private final TextureRegion standingRegion;
@@ -30,6 +29,7 @@ public class Player extends GameObject {
             bounds, world,
             new TextureRegion(actualRegion, 0, 0, 16, 16)
         );
+
 
         previousState = PlayerAnimationState.STANDING;
         currentState = PlayerAnimationState.STANDING;
@@ -58,11 +58,8 @@ public class Player extends GameObject {
 
         setActualRegion(getAnimationRegion(deltaTime));
 
-        if (Gdx.input.isKeyPressed(Input.Keys.D) && body.getLinearVelocity().x <= 10)
+        if (body.getLinearVelocity().x <= 10)
             applyLinealImpulse(new Vector2(5, 0));
-
-        else if (Gdx.input.isKeyPressed(Input.Keys.A) && body.getLinearVelocity().x >= -10)
-            applyLinealImpulse(new Vector2(-5, 0));
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && body.getLinearVelocity().y == 0)
             applyLinealImpulse(new Vector2(0, 170));
@@ -84,12 +81,10 @@ public class Player extends GameObject {
 
     private PlayerAnimationState getPlayerCurrentState() {
 
-        boolean isPlayerMoving = Gdx.input.isKeyPressed(Input.Keys.A) || Gdx.input.isKeyPressed(Input.Keys.D);
-
         if (body.getLinearVelocity().y > 0 || (body.getLinearVelocity().y < 0 && previousState == PlayerAnimationState.JUMPING))
             return PlayerAnimationState.JUMPING;
 
-        else if (isPlayerMoving)
+        else if (body.getLinearVelocity().x > 0)
             return PlayerAnimationState.RUNNING;
 
         else if (body.getLinearVelocity().y < 0)
@@ -144,13 +139,10 @@ public class Player extends GameObject {
     }
 
     public void getHitByEnemy() {
-
         applyLinealImpulse(new Vector2(500, 0));
     }
 
     public float getDistanceInBetween(Vector2 finalPosition) {
-
-//        .dst utiliza la fórmula de calcular la distancia entre 2 puntos.
         return getPixelPosition().dst(finalPosition);
     }
 }

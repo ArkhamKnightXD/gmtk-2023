@@ -10,7 +10,6 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import knight.arkham.GameJam;
 import knight.arkham.helpers.GameContactListener;
@@ -28,13 +27,9 @@ public class GameScreen extends ScreenAdapter {
     private final World world;
     private final OrthogonalTiledMapRenderer mapRenderer;
     private final Player player;
-    private final Player player2;
     private final TileMapHelper tileMap;
     private final TextureAtlas textureAtlas;
     private boolean isDebug;
-    private boolean isDisposed;
-    private boolean isPlayer1;
-
 
     public GameScreen() {
         game = GameJam.INSTANCE;
@@ -52,20 +47,15 @@ public class GameScreen extends ScreenAdapter {
         TextureRegion playerRegion = textureAtlas.findRegion("little_mario");
 
         player = new Player(new Rectangle(450, 60, 32, 32), world, playerRegion);
-        player2 = new Player(new Rectangle(550, 60, 32, 32), world, playerRegion);
 
         GameData gameDataToSave = new GameData("GameScreen", player.getWorldPosition());
         GameDataHelper.saveGameData(GAME_DATA_FILENAME, gameDataToSave);
 
-        tileMap = new TileMapHelper(world, textureAtlas, "maps/grassland/land.tmx");
+        tileMap = new TileMapHelper(world, textureAtlas, "maps/playground/test.tmx");
 
         mapRenderer = tileMap.setupMap();
 
-//        isDebug = true;
-
-        GameJam.INSTANCE.setToDispose = false;
-
-        isPlayer1 = true;
+        isDebug = true;
     }
 
     @Override
@@ -75,19 +65,15 @@ public class GameScreen extends ScreenAdapter {
     }
 
 
-    private void update(float deltaTime){
+    private void update(float deltaTime) {
 
         world.step(1 / 60f, 6, 2);
 
         updateCameraPosition();
 
-        if (isPlayer1)
-            player.update(deltaTime);
+        player.update(deltaTime);
 
-        else
-            player2.update(deltaTime);
-
-        for (Enemy enemy : new Array.ArrayIterator<>(tileMap.getEnemies())){
+        for (Enemy enemy : tileMap.getEnemies()) {
 
             if (player.getDistanceInBetween(enemy.getPixelPosition()) < 170)
                 enemy.getBody().setActive(true);
@@ -98,58 +84,36 @@ public class GameScreen extends ScreenAdapter {
         if (Gdx.input.isKeyJustPressed(Input.Keys.F1))
             isDebug = !isDebug;
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.F2))
-            isPlayer1 = !isPlayer1;
-
         game.manageExitTheGame();
     }
 
-    private void disposeWorld() {
-
-        world.dispose();
-        mapRenderer.dispose();
-
-        isDisposed = true;
-    }
-
-    private void updateCameraPosition(){
-
-        if (Gdx.input.isKeyJustPressed(Input.Keys.F3))
-            camera.zoom += 0.2f;
-
-        if (Gdx.input.isKeyJustPressed(Input.Keys.F4))
-            camera.zoom -= 0.2f;
+    private void updateCameraPosition() {
 
         boolean isPlayerInsideMapBounds = tileMap.isPlayerInsideMapBounds(player.getPixelPosition());
 
         if (isPlayerInsideMapBounds)
-            camera.position.set(player.getWorldPosition().x,9.5f, 0);
+            camera.position.set(player.getWorldPosition().x, 9.5f, 0);
 
         camera.update();
-
-        mapRenderer.setView(camera);
     }
 
 
     @Override
     public void render(float delta) {
 
-        if (GameJam.INSTANCE.setToDispose && !isDisposed)
-            disposeWorld();
+        update(delta);
 
-        else if (!isDisposed){
+        draw();
 
-            update(delta);
-
-            draw();
-        }
     }
 
     private void draw() {
 
-        ScreenUtils.clear(0,0,0,0);
+        ScreenUtils.clear(0, 0, 0, 0);
 
-        if (!isDebug){
+        if (!isDebug) {
+
+            mapRenderer.setView(camera);
 
             mapRenderer.render();
 
@@ -158,15 +122,15 @@ public class GameScreen extends ScreenAdapter {
             game.batch.begin();
 
             player.draw(game.batch);
-            player2.draw(game.batch);
 
-            for (Enemy enemy : new Array.ArrayIterator<>(tileMap.getEnemies()))
+            for (Enemy enemy : tileMap.getEnemies())
                 enemy.draw(game.batch);
 
-            game.batch.end();
-        }
+            tileMap.getFinishFlag().draw(game.batch);
 
-        else
+            game.batch.end();
+
+        } else
             game.debugRenderer.render(world, camera.combined);
     }
 
@@ -181,8 +145,9 @@ public class GameScreen extends ScreenAdapter {
 
         player.dispose();
         textureAtlas.dispose();
+        tileMap.getFinishFlag().dispose();
 
-        for (Enemy enemy : new Array.ArrayIterator<>(tileMap.getEnemies()))
+        for (Enemy enemy : tileMap.getEnemies())
             enemy.dispose();
     }
 }

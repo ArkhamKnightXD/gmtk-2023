@@ -8,8 +8,6 @@ public class GameDataHelper {
 
     public static void saveGameData(String filename, GameData gameData){
 
-// This method creates a xml file if the file doesn't exist it will be created, if the file does exist it will
-// be overwritten, default path user/.pref/filename.xml
         Preferences preferences = Gdx.app.getPreferences(filename);
 
         preferences.putString("screenName", gameData.screenName);

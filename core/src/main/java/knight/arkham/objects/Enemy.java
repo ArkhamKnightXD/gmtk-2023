@@ -17,8 +17,6 @@ public class Enemy extends GameObject {
     private final Animation<TextureRegion> runningAnimation;
     private float stateTimer;
 
-    //bolean variables by default initialize on false. If I want the variable to start on false,
-    // I don't have to initialized on false.
     public boolean isMovingRight;
     private boolean setToDestroy;
     private boolean isDestroyed;
@@ -61,8 +59,6 @@ public class Enemy extends GameObject {
 
     public void update(float deltaTime) {
 
-        //Debido a que estoy haciendo += con mi deltaTime, esta variable ira guardando
-        // los segundos que han pasado, desde que empezó mi gameLoop. Esta variable es básicamente un contador.
         stateTimer += deltaTime;
 
         if (setToDestroy && !isDestroyed)

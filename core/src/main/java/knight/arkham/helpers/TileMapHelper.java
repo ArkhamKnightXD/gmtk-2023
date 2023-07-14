@@ -15,7 +15,6 @@ import knight.arkham.objects.Enemy;
 import knight.arkham.objects.structures.Block;
 import knight.arkham.objects.structures.Checkpoint;
 import knight.arkham.objects.structures.FinishFlag;
-import knight.arkham.objects.structures.MovingStructure;
 
 import static knight.arkham.helpers.Constants.MID_SCREEN_WIDTH;
 import static knight.arkham.helpers.Constants.PIXELS_PER_METER;
@@ -26,7 +25,6 @@ public class TileMapHelper {
     private final TiledMap tiledMap;
     private final TextureRegion enemyRegion;
     private final Array<Enemy> enemies;
-    private final Array<MovingStructure> structures;
     private FinishFlag finishFlag;
 
     public TileMapHelper(World world, TextureAtlas textureAtlas, String mapFilePath) {
@@ -35,7 +33,6 @@ public class TileMapHelper {
         enemyRegion = textureAtlas.findRegion("goomba");
         tiledMap = new TmxMapLoader().load(mapFilePath);
         enemies = new Array<>();
-        structures = new Array<>();
     }
 
     public OrthogonalTiledMapRenderer setupMap() {
@@ -76,14 +73,6 @@ public class TileMapHelper {
                     finishFlag = new FinishFlag(box2dRectangle, world, tiledMap);
                     break;
 
-                case "MovingStructure":
-                    if (mapObject.getName().equals("left-right"))
-                        structures.add(new MovingStructure(box2dRectangle, world, new Vector2(2,0)));
-                    else
-                        structures.add(new MovingStructure(box2dRectangle, world, new Vector2(0,2)));
-
-                    break;
-
                 default:
                     Box2DHelper.createBody(new Box2DBody(box2dRectangle, world));
                     break;
@@ -114,8 +103,6 @@ public class TileMapHelper {
     public Array<Enemy> getEnemies() {
         return enemies;
     }
-
-    public Array<MovingStructure> getMovingStructures() {return structures;}
 
     public FinishFlag getFinishFlag() {return finishFlag;}
 }

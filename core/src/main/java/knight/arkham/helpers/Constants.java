@@ -4,13 +4,9 @@ import com.badlogic.gdx.Gdx;
 
 public class Constants {
 
-    public static final String GAME_DATA_FILENAME = "gmtk-2023";
+    public static final String GAME_DATA_FILENAME = "jammin";
 
     public static final float PIXELS_PER_METER = 32f;
-
-    public static final int FULL_SCREEN_HEIGHT = Gdx.graphics.getWidth();
-    public static final int FULL_SCREEN_WIDTH = Gdx.graphics.getHeight();
-    public static final int MID_SCREEN_HEIGHT = Gdx.graphics.getHeight() / 2;
     public static final int MID_SCREEN_WIDTH = Gdx.graphics.getWidth()/ 2;
 
     public static final short NOTHING_BIT = 0;
@@ -26,5 +22,5 @@ public class Constants {
     public static final short ENEMY_BIT = 64;
     public static final short ENEMY_HEAD_BIT = 128;
     public static final short FINISH_BIT = 256;
-    public static final short MARIO_HEAD_BIT = 512;
+    public static final short PLAYER_HEAD_BIT = 512;
 }

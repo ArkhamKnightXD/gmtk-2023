@@ -36,7 +36,6 @@ public class GameJam extends Game {
         int screenWidth = Gdx.graphics.getWidth();
         int screenHeight = Gdx.graphics.getHeight();
 
-//        It is better to avoid using PPM to set up my viewport.
         viewport = new FitViewport(screenWidth / 32f, screenHeight / 32f, globalCamera);
 
         setScreen(new GameScreen());

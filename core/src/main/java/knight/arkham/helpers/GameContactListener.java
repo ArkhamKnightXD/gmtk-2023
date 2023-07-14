@@ -31,7 +31,7 @@ public class GameContactListener implements ContactListener {
                     ((Enemy) fixtureB.getUserData()).hitOnHead();
                 break;
 
-            case MARIO_HEAD_BIT | BRICK_BIT:
+            case PLAYER_HEAD_BIT | BRICK_BIT:
 
                 if (fixtureA.getFilterData().categoryBits == BRICK_BIT)
                     ((Block) fixtureA.getUserData()).hitByPlayer();

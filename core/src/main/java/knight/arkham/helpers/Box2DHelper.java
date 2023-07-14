@@ -140,7 +140,7 @@ public class Box2DHelper {
 
         fixtureDefinition.isSensor = true;
 
-        fixtureDefinition.filter.categoryBits = MARIO_HEAD_BIT;
+        fixtureDefinition.filter.categoryBits = PLAYER_HEAD_BIT;
 
         return headCollider;
     }
