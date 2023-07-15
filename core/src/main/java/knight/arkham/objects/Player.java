@@ -22,6 +22,7 @@ public class Player extends GameObject {
     private PlayerAnimationState previousState;
     private final Animation<TextureRegion> runningAnimation;
     private float stateTimer;
+    private int jumpCounter;
     private boolean isPlayerRunningRight;
 
     public Player(Rectangle bounds, World world, TextureRegion actualRegion) {
@@ -58,11 +59,23 @@ public class Player extends GameObject {
 
         setActualRegion(getAnimationRegion(deltaTime));
 
-        if (body.getLinearVelocity().x <= 10)
+//        if (body.getLinearVelocity().x <= 10)
+//            applyLinealImpulse(new Vector2(5, 0));
+
+        if (Gdx.input.isKeyPressed(Input.Keys.D) && body.getLinearVelocity().x <= 10)
             applyLinealImpulse(new Vector2(5, 0));
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && body.getLinearVelocity().y == 0)
-            applyLinealImpulse(new Vector2(0, 170));
+        else if (Gdx.input.isKeyPressed(Input.Keys.A) && body.getLinearVelocity().x >= -10)
+            applyLinealImpulse(new Vector2(-5, 0));
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && jumpCounter < 2){
+            applyLinealImpulse(new Vector2(0, 140));
+
+            jumpCounter++;
+        }
+
+        if (body.getLinearVelocity().y == 0)
+            jumpCounter = 0;
 
         playerFallToDead();
     }
@@ -84,7 +97,7 @@ public class Player extends GameObject {
         if (body.getLinearVelocity().y > 0 || (body.getLinearVelocity().y < 0 && previousState == PlayerAnimationState.JUMPING))
             return PlayerAnimationState.JUMPING;
 
-        else if (body.getLinearVelocity().x > 0)
+        else if (body.getLinearVelocity().x != 0)
             return PlayerAnimationState.RUNNING;
 
         else if (body.getLinearVelocity().y < 0)

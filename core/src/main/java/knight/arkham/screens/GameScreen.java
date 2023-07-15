@@ -46,7 +46,7 @@ public class GameScreen extends ScreenAdapter {
 
         TextureRegion playerRegion = textureAtlas.findRegion("little_mario");
 
-        player = new Player(new Rectangle(450, 60, 32, 32), world, playerRegion);
+        player = new Player(new Rectangle(450, 60, 16, 16), world, playerRegion);
 
         GameData gameDataToSave = new GameData("GameScreen", player.getWorldPosition());
         GameDataHelper.saveGameData(GAME_DATA_FILENAME, gameDataToSave);
@@ -55,7 +55,7 @@ public class GameScreen extends ScreenAdapter {
 
         mapRenderer = tileMap.setupMap();
 
-        isDebug = true;
+//        isDebug = false;
     }
 
     @Override
@@ -81,7 +81,7 @@ public class GameScreen extends ScreenAdapter {
             enemy.update(deltaTime);
         }
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.F1))
+        if (Gdx.input.isKeyJustPressed(Input.Keys.C))
             isDebug = !isDebug;
 
         game.manageExitTheGame();
