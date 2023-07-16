@@ -94,7 +94,7 @@
  </layer>
  <objectgroup id="3" name="Enemies">
   <object id="66" x="908.333" y="575" width="16" height="16"/>
-  <object id="69" x="4592" y="576" width="16" height="16"/>
+  <object id="69" x="4576.5" y="575.75" width="16" height="16"/>
   <object id="70" x="4655.75" y="576" width="16" height="16"/>
   <object id="71" x="4736" y="576.25" width="16" height="16"/>
  </objectgroup>
