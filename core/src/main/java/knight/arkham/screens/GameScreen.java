@@ -4,8 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -18,6 +16,7 @@ import knight.arkham.helpers.GameDataHelper;
 import knight.arkham.helpers.TileMapHelper;
 import knight.arkham.objects.Enemy;
 import knight.arkham.objects.Player;
+import knight.arkham.objects.structures.Platform;
 
 import static knight.arkham.helpers.Constants.GAME_DATA_FILENAME;
 
@@ -28,7 +27,6 @@ public class GameScreen extends ScreenAdapter {
     private final OrthogonalTiledMapRenderer mapRenderer;
     private final Player player;
     private final TileMapHelper tileMap;
-    private final TextureAtlas textureAtlas;
     private boolean isDebug;
 
     public GameScreen() {
@@ -42,16 +40,12 @@ public class GameScreen extends ScreenAdapter {
 
         world.setContactListener(contactListener);
 
-        textureAtlas = new TextureAtlas("images/atlas/Mario_and_Enemies.pack");
-
-        TextureRegion playerRegion = textureAtlas.findRegion("little_mario");
-
-        player = new Player(new Rectangle(450, 60, 16, 16), world, playerRegion);
+        player = new Player(new Rectangle(450, 60, 16, 16), world);
 
         GameData gameDataToSave = new GameData("GameScreen", player.getWorldPosition());
         GameDataHelper.saveGameData(GAME_DATA_FILENAME, gameDataToSave);
 
-        tileMap = new TileMapHelper(world, textureAtlas, "maps/playground/test.tmx");
+        tileMap = new TileMapHelper(world, "maps/playground/test.tmx");
 
         mapRenderer = tileMap.setupMap();
 
@@ -126,6 +120,9 @@ public class GameScreen extends ScreenAdapter {
             for (Enemy enemy : tileMap.getEnemies())
                 enemy.draw(game.batch);
 
+            for (Platform platform : tileMap.getPlatforms())
+                platform.draw(game.batch);
+
             tileMap.getFinishFlag().draw(game.batch);
 
             game.batch.end();
@@ -144,7 +141,6 @@ public class GameScreen extends ScreenAdapter {
     public void dispose() {
 
         player.dispose();
-        textureAtlas.dispose();
         tileMap.getFinishFlag().dispose();
 
         for (Enemy enemy : tileMap.getEnemies())

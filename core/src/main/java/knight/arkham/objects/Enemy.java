@@ -1,7 +1,7 @@
 package knight.arkham.objects;
 
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
@@ -14,27 +14,21 @@ import knight.arkham.helpers.Box2DBody;
 import knight.arkham.helpers.Box2DHelper;
 
 public class Enemy extends GameObject {
-    private final Animation<TextureRegion> runningAnimation;
     private float stateTimer;
 
     public boolean isMovingRight;
     private boolean setToDestroy;
     private boolean isDestroyed;
-    private final TextureRegion region;
 
-    public Enemy(Rectangle rectangle, World world, TextureRegion region) {
+    public Enemy(Rectangle rectangle, World world) {
         super(
             rectangle, world,
-            new TextureRegion(region, 0, 0, 16, 16)
+            new TextureRegion(new Texture("images/pink.jpg"), 0, 0, 16, 16)
         );
-
-        this.region = region;
 
         body.setActive(false);
 
         stateTimer = 0;
-
-        runningAnimation = makeAnimationByFrameRange(region, 0, 1, 0.4f);
     }
 
     @Override
@@ -52,8 +46,6 @@ public class Enemy extends GameObject {
         actualWorld.destroyBody(body);
         isDestroyed = true;
 
-        setActualRegion(new TextureRegion(region, 32, 0, 16, 16));
-
         stateTimer = 0;
     }
 
@@ -65,8 +57,6 @@ public class Enemy extends GameObject {
             destroyEnemy();
 
         else if (!isDestroyed && body.isActive()) {
-
-            setActualRegion(runningAnimation.getKeyFrame(stateTimer, true));
 
             if (isMovingRight && body.getLinearVelocity().x <= 4)
                 applyLinealImpulse(new Vector2(2, 0));

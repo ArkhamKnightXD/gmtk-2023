@@ -1,7 +1,5 @@
 package knight.arkham.helpers;
 
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.*;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -15,6 +13,7 @@ import knight.arkham.objects.Enemy;
 import knight.arkham.objects.structures.Block;
 import knight.arkham.objects.structures.Checkpoint;
 import knight.arkham.objects.structures.FinishFlag;
+import knight.arkham.objects.structures.Platform;
 
 import static knight.arkham.helpers.Constants.MID_SCREEN_WIDTH;
 import static knight.arkham.helpers.Constants.PIXELS_PER_METER;
@@ -23,16 +22,16 @@ public class TileMapHelper {
 
     private final World world;
     private final TiledMap tiledMap;
-    private final TextureRegion enemyRegion;
     private final Array<Enemy> enemies;
+    private final Array<Platform> platforms;
     private FinishFlag finishFlag;
 
-    public TileMapHelper(World world, TextureAtlas textureAtlas, String mapFilePath) {
+    public TileMapHelper(World world, String mapFilePath) {
 
         this.world = world;
-        enemyRegion = textureAtlas.findRegion("goomba");
         tiledMap = new TmxMapLoader().load(mapFilePath);
         enemies = new Array<>();
+        platforms = new Array<>();
     }
 
     public OrthogonalTiledMapRenderer setupMap() {
@@ -58,7 +57,7 @@ public class TileMapHelper {
             switch (objectsName) {
 
                 case "Enemies":
-                    enemies.add(new Enemy(box2dRectangle, world, enemyRegion));
+                    enemies.add(new Enemy(box2dRectangle, world));
                     break;
 
                 case "Blocks":
@@ -73,8 +72,12 @@ public class TileMapHelper {
                     finishFlag = new FinishFlag(box2dRectangle, world, tiledMap);
                     break;
 
-                default:
-                    Box2DHelper.createBody(new Box2DBody(box2dRectangle, world));
+                case "Collisions":
+                    if (mapObject.getName().equals("blue"))
+                        platforms.add(new Platform(box2dRectangle, world, tiledMap, true));
+                    else
+                        platforms.add(new Platform(box2dRectangle, world, tiledMap, false));
+
                     break;
             }
         }
@@ -102,6 +105,10 @@ public class TileMapHelper {
 
     public Array<Enemy> getEnemies() {
         return enemies;
+    }
+
+    public Array<Platform> getPlatforms() {
+        return platforms;
     }
 
     public FinishFlag getFinishFlag() {return finishFlag;}

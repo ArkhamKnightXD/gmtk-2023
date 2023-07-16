@@ -2,7 +2,7 @@ package knight.arkham.objects;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -16,31 +16,13 @@ import knight.arkham.helpers.GameDataHelper;
 import static knight.arkham.helpers.Constants.GAME_DATA_FILENAME;
 
 public class Player extends GameObject {
-    private final TextureRegion jumpingRegion;
-    private final TextureRegion standingRegion;
-    private PlayerAnimationState currentState;
-    private PlayerAnimationState previousState;
-    private final Animation<TextureRegion> runningAnimation;
-    private float stateTimer;
     private int jumpCounter;
-    private boolean isPlayerRunningRight;
 
-    public Player(Rectangle bounds, World world, TextureRegion actualRegion) {
+    public Player(Rectangle bounds, World world) {
         super(
             bounds, world,
-            new TextureRegion(actualRegion, 0, 0, 16, 16)
+            new TextureRegion(new Texture("images/white.jpg"), 0, 0, 16, 16)
         );
-
-
-        previousState = PlayerAnimationState.STANDING;
-        currentState = PlayerAnimationState.STANDING;
-
-        stateTimer = 0;
-
-        standingRegion = new TextureRegion(actualRegion, 0, 0, 16, 16);
-        jumpingRegion = new TextureRegion(actualRegion, 80, 0, 16, 16);
-
-        runningAnimation = makeAnimationByFrameRange(actualRegion, 1, 3, 0.1f);
     }
 
     @Override
@@ -56,8 +38,6 @@ public class Player extends GameObject {
     }
 
     public void update(float deltaTime) {
-
-        setActualRegion(getAnimationRegion(deltaTime));
 
 //        if (body.getLinearVelocity().x <= 10)
 //            applyLinealImpulse(new Vector2(5, 0));
@@ -89,65 +69,6 @@ public class Player extends GameObject {
             Vector2 position = GameDataHelper.loadGameData(GAME_DATA_FILENAME).position;
 
             body.setTransform(position, 0);
-        }
-    }
-
-    private PlayerAnimationState getPlayerCurrentState() {
-
-        if (body.getLinearVelocity().y > 0 || (body.getLinearVelocity().y < 0 && previousState == PlayerAnimationState.JUMPING))
-            return PlayerAnimationState.JUMPING;
-
-        else if (body.getLinearVelocity().x != 0)
-            return PlayerAnimationState.RUNNING;
-
-        else if (body.getLinearVelocity().y < 0)
-            return PlayerAnimationState.FALLING;
-
-        else
-            return PlayerAnimationState.STANDING;
-    }
-
-
-    private TextureRegion getAnimationRegion(float deltaTime) {
-
-        currentState = getPlayerCurrentState();
-
-        TextureRegion region;
-
-        switch (currentState) {
-
-            case JUMPING:
-                region = jumpingRegion;
-                break;
-
-            case RUNNING:
-                region = runningAnimation.getKeyFrame(stateTimer, true);
-                break;
-
-            case FALLING:
-            case STANDING:
-            default:
-                region = standingRegion;
-        }
-
-        flipPlayerOnXAxis(region);
-
-        stateTimer = currentState == previousState ? stateTimer + deltaTime : 0;
-        previousState = currentState;
-
-        return region;
-    }
-
-    private void flipPlayerOnXAxis(TextureRegion region) {
-
-        if ((body.getLinearVelocity().x < 0 || !isPlayerRunningRight) && !region.isFlipX()) {
-
-            region.flip(true, false);
-            isPlayerRunningRight = false;
-        } else if ((body.getLinearVelocity().x > 0 || isPlayerRunningRight) && region.isFlipX()) {
-
-            region.flip(true, false);
-            isPlayerRunningRight = true;
         }
     }
 

@@ -67,7 +67,6 @@ public class GameContactListener implements ContactListener {
                 else
                     ((FinishFlag) fixtureB.getUserData()).finishLevel();
                 break;
-
         }
 
 
