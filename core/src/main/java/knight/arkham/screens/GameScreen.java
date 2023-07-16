@@ -43,7 +43,7 @@ public class GameScreen extends ScreenAdapter {
         GameData gameDataToSave = new GameData("GameScreen", player.getWorldPosition());
         GameDataHelper.saveGameData(GAME_DATA_FILENAME, gameDataToSave);
 
-        tileMap = new TileMapHelper(world, "maps/playground/test.tmx");
+        tileMap = new TileMapHelper(world, "maps/test.tmx");
 
         tileMap.setupMap();
         music = AssetsHelper.loadMusic("pixel3.mp3");
