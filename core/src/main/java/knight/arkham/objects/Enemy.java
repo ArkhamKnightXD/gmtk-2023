@@ -61,7 +61,7 @@ public class Enemy extends GameObject {
     public void hitOnHead() {
         setToDestroy = true;
 
-        Sound sound = AssetsHelper.loadSound("stomp.wav");
+        Sound sound = AssetsHelper.loadSound("drop.wav");
 
         sound.play();
 

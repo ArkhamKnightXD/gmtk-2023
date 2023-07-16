@@ -46,7 +46,7 @@ public class Checkpoint extends InteractiveStructure {
         filter.categoryBits = DESTROYED_BIT;
         fixture.setFilterData(filter);
 
-        Sound sound = AssetsHelper.loadSound("coin.wav");
+        Sound sound = AssetsHelper.loadSound("okay.wav");
         sound.play();
 
         GameData gameDataToSave = new GameData("GameScreen", body.getPosition());

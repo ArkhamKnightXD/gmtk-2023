@@ -67,9 +67,9 @@ public class Platform extends InteractiveStructure {
 
         fixture.setFilterData(filter);
 
-        Sound sound = AssetsHelper.loadSound("bump.wav");
+        Sound sound = AssetsHelper.loadSound("drop.wav");
 
-        sound.play(0.1f);
+        sound.play(0.05f);
     }
 
     public void dispose() {

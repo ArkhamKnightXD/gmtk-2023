@@ -93,13 +93,12 @@
 </data>
  </layer>
  <objectgroup id="3" name="Enemies">
-  <object id="66" x="908.333" y="575" width="16" height="16"/>
-  <object id="69" x="4576.5" y="575.75" width="16" height="16"/>
-  <object id="70" x="4655.75" y="576" width="16" height="16"/>
-  <object id="71" x="4736" y="576.25" width="16" height="16"/>
+  <object id="66" name="blue" x="908.333" y="575" width="16" height="16"/>
+  <object id="69" name="blue" x="4576.5" y="575.75" width="16" height="16"/>
+  <object id="70" name="blue" x="4655.75" y="576" width="16" height="16"/>
  </objectgroup>
  <objectgroup id="5" name="FinishFlag">
-  <object id="53" x="4800" y="576.583" width="16" height="16"/>
+  <object id="53" x="4768.75" y="575.583" width="16" height="16"/>
  </objectgroup>
  <objectgroup id="4" name="Collisions">
   <object id="3" name="gray" x="0" y="591.667" width="639.75" height="47.8333"/>
@@ -121,7 +120,7 @@
   <object id="60" name="pink" x="2127.83" y="591.667" width="48" height="48.3333"/>
   <object id="61" name="pink" x="1807.67" y="592.166" width="48" height="47.3334"/>
   <object id="62" name="blue" x="2545" y="592.333" width="143" height="47.1667"/>
-  <object id="73" name="blue" x="4752.92" y="591.917" width="94.8333" height="47.5"/>
-  <object id="74" name="pink" x="4575.92" y="591.917" width="176.833" height="47.5"/>
+  <object id="73" name="blue" x="4718.92" y="591.917" width="128.833" height="47.5"/>
+  <object id="74" name="pink" x="4575.92" y="591.917" width="96.333" height="47.5"/>
  </objectgroup>
 </map>

@@ -5,7 +5,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import knight.arkham.screens.GameScreen;
@@ -15,8 +14,6 @@ public class GameJam extends Game {
     public SpriteBatch batch;
     public OrthographicCamera globalCamera;
     public Viewport viewport;
-    public Box2DDebugRenderer debugRenderer;
-    public boolean setToDispose;
     public boolean resetStage;
 
     public GameJam() {
@@ -26,8 +23,6 @@ public class GameJam extends Game {
 
     @Override
     public void create() {
-
-        debugRenderer = new Box2DDebugRenderer();
 
         batch = new SpriteBatch();
 

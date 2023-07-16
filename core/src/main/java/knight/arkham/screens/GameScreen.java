@@ -3,6 +3,7 @@ package knight.arkham.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
@@ -10,10 +11,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.ScreenUtils;
 import knight.arkham.GameJam;
-import knight.arkham.helpers.GameContactListener;
-import knight.arkham.helpers.GameData;
-import knight.arkham.helpers.GameDataHelper;
-import knight.arkham.helpers.TileMapHelper;
+import knight.arkham.helpers.*;
 import knight.arkham.objects.Enemy;
 import knight.arkham.objects.Player;
 import knight.arkham.objects.structures.Checkpoint;
@@ -30,6 +28,7 @@ public class GameScreen extends ScreenAdapter {
     private final Player player;
     private final TileMapHelper tileMap;
     private boolean isDebug;
+    private final Music music;
 
     public GameScreen() {
         game = GameJam.INSTANCE;
@@ -50,6 +49,11 @@ public class GameScreen extends ScreenAdapter {
         tileMap = new TileMapHelper(world, "maps/playground/test.tmx");
 
         mapRenderer = tileMap.setupMap();
+        music = AssetsHelper.loadMusic("pixel3.mp3");
+
+        music.play();
+        music.setVolume(0.4f);
+        music.setLooping(true);
     }
 
     @Override
@@ -107,36 +111,31 @@ public class GameScreen extends ScreenAdapter {
 
         ScreenUtils.clear(0, 0, 0, 0);
 
-        if (!isDebug) {
+        mapRenderer.setView(camera);
 
-            mapRenderer.setView(camera);
+        mapRenderer.render();
 
-            mapRenderer.render();
+        game.batch.setProjectionMatrix(camera.combined);
 
-            game.batch.setProjectionMatrix(camera.combined);
+        game.batch.begin();
 
-            game.batch.begin();
+        player.draw(game.batch);
 
-            player.draw(game.batch);
+        for (Enemy enemy : tileMap.getEnemies())
+            enemy.draw(game.batch);
 
-            for (Enemy enemy : tileMap.getEnemies())
-                enemy.draw(game.batch);
+        for (Platform platform : tileMap.getPlatforms())
+            platform.draw(game.batch);
 
-            for (Platform platform : tileMap.getPlatforms())
-                platform.draw(game.batch);
+        for (NeutralPlatform neutralPlatform : tileMap.getNeutralPlatforms())
+            neutralPlatform.draw(game.batch);
 
-            for (NeutralPlatform neutralPlatform : tileMap.getNeutralPlatforms())
-                neutralPlatform.draw(game.batch);
+        for (Checkpoint checkpoint : tileMap.getCheckpoints())
+            checkpoint.draw(game.batch);
 
-            for (Checkpoint checkpoint : tileMap.getCheckpoints())
-                checkpoint.draw(game.batch);
+        tileMap.getFinishFlag().draw(game.batch);
 
-            tileMap.getFinishFlag().draw(game.batch);
-
-            game.batch.end();
-
-        } else
-            game.debugRenderer.render(world, camera.combined);
+        game.batch.end();
     }
 
     @Override
@@ -150,6 +149,7 @@ public class GameScreen extends ScreenAdapter {
 
         player.dispose();
         tileMap.getFinishFlag().dispose();
+        music.dispose();
 
         for (Enemy enemy : tileMap.getEnemies())
             enemy.dispose();
