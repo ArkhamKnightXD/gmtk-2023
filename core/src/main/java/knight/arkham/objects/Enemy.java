@@ -22,7 +22,7 @@ public class Enemy extends GameObject {
     public Enemy(Rectangle rectangle, World world) {
         super(
             rectangle, world,
-            new TextureRegion(new Texture("images/pink.jpg"), 0, 0, 16, 16)
+            new TextureRegion(new Texture("images/gray.jpg"), 0, 0, 16, 16)
         );
 
         body.setActive(false);
@@ -50,8 +50,6 @@ public class Enemy extends GameObject {
 
     public void update(float deltaTime) {
 
-        stateTimer += deltaTime;
-
         if (setToDestroy && !isDestroyed)
             destroyEnemy();
 
@@ -70,7 +68,7 @@ public class Enemy extends GameObject {
 
     @Override
     public void draw(Batch batch) {
-        if (!isDestroyed || stateTimer < 1)
+        if (!isDestroyed)
             super.draw(batch);
     }
 

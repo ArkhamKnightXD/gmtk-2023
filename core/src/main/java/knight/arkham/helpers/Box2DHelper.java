@@ -93,7 +93,7 @@ public class Box2DHelper {
 
         fixtureDef.filter.categoryBits = ENEMY_BIT;
 
-        fixtureDef.filter.maskBits = (short) (GROUND_BIT | PINK_GROUND_BIT | ENEMY_BIT | PLAYER_BIT);
+        fixtureDef.filter.maskBits = (short) (GROUND_BIT | PINK_GROUND_BIT | BLUE_GROUND_BIT | ENEMY_BIT | PLAYER_BIT);
 
         body.createFixture(fixtureDef).setUserData(box2DBody.userData);
 
