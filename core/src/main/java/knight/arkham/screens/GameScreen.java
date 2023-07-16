@@ -50,8 +50,6 @@ public class GameScreen extends ScreenAdapter {
         tileMap = new TileMapHelper(world, "maps/playground/test.tmx");
 
         mapRenderer = tileMap.setupMap();
-
-//        isDebug = false;
     }
 
     @Override
@@ -159,5 +157,14 @@ public class GameScreen extends ScreenAdapter {
 
         for (Enemy enemy : tileMap.getEnemies())
             enemy.dispose();
+
+        for (Platform platform : tileMap.getPlatforms())
+            platform.dispose();
+
+        for (NeutralPlatform neutralPlatform : tileMap.getNeutralPlatforms())
+            neutralPlatform.dispose();
+
+        for (Checkpoint checkpoint : tileMap.getCheckpoints())
+            checkpoint.dispose();
     }
 }

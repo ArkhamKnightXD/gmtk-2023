@@ -54,4 +54,6 @@ public class Checkpoint extends InteractiveStructure {
 
         isDestroyed = true;
     }
+
+    public void dispose() {sprite.dispose();}
 }

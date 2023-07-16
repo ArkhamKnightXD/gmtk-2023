@@ -71,4 +71,9 @@ public class Platform extends InteractiveStructure {
 
         sound.play(0.1f);
     }
+
+    public void dispose() {
+        blueSprite.dispose();
+        pinkSprite.dispose();
+    }
 }
