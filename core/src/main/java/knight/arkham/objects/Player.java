@@ -39,14 +39,14 @@ public class Player extends GameObject {
 
     public void update(float deltaTime) {
 
-//        if (body.getLinearVelocity().x <= 10)
-//            applyLinealImpulse(new Vector2(5, 0));
-
-        if (Gdx.input.isKeyPressed(Input.Keys.D) && body.getLinearVelocity().x <= 10)
+        if (body.getLinearVelocity().x <= 10)
             applyLinealImpulse(new Vector2(5, 0));
 
-        else if (Gdx.input.isKeyPressed(Input.Keys.A) && body.getLinearVelocity().x >= -10)
-            applyLinealImpulse(new Vector2(-5, 0));
+//        if (Gdx.input.isKeyPressed(Input.Keys.D) && body.getLinearVelocity().x <= 10)
+//            applyLinealImpulse(new Vector2(5, 0));
+//
+//        else if (Gdx.input.isKeyPressed(Input.Keys.A) && body.getLinearVelocity().x >= -10)
+//            applyLinealImpulse(new Vector2(-5, 0));
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && jumpCounter < 2){
             applyLinealImpulse(new Vector2(0, 140));

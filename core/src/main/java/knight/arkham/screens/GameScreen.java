@@ -16,6 +16,8 @@ import knight.arkham.helpers.GameDataHelper;
 import knight.arkham.helpers.TileMapHelper;
 import knight.arkham.objects.Enemy;
 import knight.arkham.objects.Player;
+import knight.arkham.objects.structures.Checkpoint;
+import knight.arkham.objects.structures.NeutralPlatform;
 import knight.arkham.objects.structures.Platform;
 
 import static knight.arkham.helpers.Constants.GAME_DATA_FILENAME;
@@ -75,7 +77,13 @@ public class GameScreen extends ScreenAdapter {
             enemy.update(deltaTime);
         }
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.C))
+        for (Platform platform : tileMap.getPlatforms()) {
+
+            if (Gdx.input.isKeyJustPressed(Input.Keys.C))
+                platform.changeColor();
+        }
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.F1))
             isDebug = !isDebug;
 
         game.manageExitTheGame();
@@ -122,6 +130,12 @@ public class GameScreen extends ScreenAdapter {
 
             for (Platform platform : tileMap.getPlatforms())
                 platform.draw(game.batch);
+
+            for (NeutralPlatform neutralPlatform : tileMap.getNeutralPlatforms())
+                neutralPlatform.draw(game.batch);
+
+            for (Checkpoint checkpoint : tileMap.getCheckpoints())
+                checkpoint.draw(game.batch);
 
             tileMap.getFinishFlag().draw(game.batch);
 

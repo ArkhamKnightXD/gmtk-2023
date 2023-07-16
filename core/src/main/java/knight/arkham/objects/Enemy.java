@@ -15,7 +15,6 @@ import knight.arkham.helpers.Box2DHelper;
 
 public class Enemy extends GameObject {
     private float stateTimer;
-
     public boolean isMovingRight;
     private boolean setToDestroy;
     private boolean isDestroyed;

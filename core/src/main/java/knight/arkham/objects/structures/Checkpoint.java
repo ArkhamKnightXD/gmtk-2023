@@ -1,7 +1,8 @@
 package knight.arkham.objects.structures;
 
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.Fixture;
@@ -12,9 +13,22 @@ import static knight.arkham.helpers.Constants.DESTROYED_BIT;
 import static knight.arkham.helpers.Constants.GAME_DATA_FILENAME;
 
 public class Checkpoint extends InteractiveStructure {
+    private final Rectangle drawBounds;
+    private final Texture sprite;
+    private boolean isDestroyed;
 
-    public Checkpoint(Rectangle rectangle, World world, TiledMap tiledMap) {
-        super(rectangle, world, tiledMap);
+    public Checkpoint(Rectangle rectangle, World world) {
+        super(rectangle, world);
+
+        sprite = new Texture("images/gray.jpg");
+
+        drawBounds = Box2DHelper.getDrawBounds(rectangle, body);
+    }
+
+    public void draw(Batch batch) {
+
+        if (!isDestroyed)
+            batch.draw(sprite, drawBounds.x, drawBounds.y, drawBounds.width, drawBounds.height);
     }
 
     @Override
@@ -38,6 +52,6 @@ public class Checkpoint extends InteractiveStructure {
         GameData gameDataToSave = new GameData("GameScreen", body.getPosition());
         GameDataHelper.saveGameData(GAME_DATA_FILENAME, gameDataToSave);
 
-        getObjectCellInTheTileMap().setTile(null);
+        isDestroyed = true;
     }
 }

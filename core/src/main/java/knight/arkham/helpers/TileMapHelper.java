@@ -12,6 +12,7 @@ import com.badlogic.gdx.utils.Array;
 import knight.arkham.objects.Enemy;
 import knight.arkham.objects.structures.Checkpoint;
 import knight.arkham.objects.structures.FinishFlag;
+import knight.arkham.objects.structures.NeutralPlatform;
 import knight.arkham.objects.structures.Platform;
 
 import static knight.arkham.helpers.Constants.MID_SCREEN_WIDTH;
@@ -23,6 +24,8 @@ public class TileMapHelper {
     private final TiledMap tiledMap;
     private final Array<Enemy> enemies;
     private final Array<Platform> platforms;
+    private final Array<NeutralPlatform> neutralPlatforms;
+    private final Array<Checkpoint> checkpoints;
     private FinishFlag finishFlag;
 
     public TileMapHelper(World world, String mapFilePath) {
@@ -31,6 +34,8 @@ public class TileMapHelper {
         tiledMap = new TmxMapLoader().load(mapFilePath);
         enemies = new Array<>();
         platforms = new Array<>();
+        neutralPlatforms = new Array<>();
+        checkpoints = new Array<>();
     }
 
     public OrthogonalTiledMapRenderer setupMap() {
@@ -60,18 +65,21 @@ public class TileMapHelper {
                     break;
 
                 case "Checkpoints":
-                    new Checkpoint(box2dRectangle, world, tiledMap);
+                    checkpoints.add(new Checkpoint(box2dRectangle, world));
                     break;
 
                 case "FinishFlag":
-                    finishFlag = new FinishFlag(box2dRectangle, world, tiledMap);
+                    finishFlag = new FinishFlag(box2dRectangle, world);
                     break;
 
                 case "Collisions":
                     if (mapObject.getName().equals("blue"))
-                        platforms.add(new Platform(box2dRectangle, world, tiledMap, true));
+                        platforms.add(new Platform(box2dRectangle, world, true));
+                    else if (mapObject.getName().equals("pink"))
+                        platforms.add(new Platform(box2dRectangle, world, false));
+
                     else
-                        platforms.add(new Platform(box2dRectangle, world, tiledMap, false));
+                        neutralPlatforms.add(new NeutralPlatform(box2dRectangle, world));
 
                     break;
             }
@@ -102,9 +110,11 @@ public class TileMapHelper {
         return enemies;
     }
 
-    public Array<Platform> getPlatforms() {
-        return platforms;
-    }
+    public Array<Platform> getPlatforms() {return platforms;}
+
+    public Array<NeutralPlatform> getNeutralPlatforms() {return neutralPlatforms;}
+
+    public Array<Checkpoint> getCheckpoints() {return checkpoints;}
 
     public FinishFlag getFinishFlag() {return finishFlag;}
 }
