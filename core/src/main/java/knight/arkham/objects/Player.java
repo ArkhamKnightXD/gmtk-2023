@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.World;
+import knight.arkham.GameJam;
 import knight.arkham.helpers.Box2DBody;
 import knight.arkham.helpers.Box2DHelper;
 import knight.arkham.helpers.GameDataHelper;
@@ -62,14 +63,12 @@ public class Player extends GameObject {
             Vector2 position = GameDataHelper.loadGameData(GAME_DATA_FILENAME).position;
 
             body.setTransform(position, 0);
+
+            GameJam.INSTANCE.resetStage = true;
         }
     }
 
     public void getHitByEnemy() {
         applyLinealImpulse(new Vector2(-500, 0));
-    }
-
-    public float getDistanceInBetween(Vector2 finalPosition) {
-        return getPixelPosition().dst(finalPosition);
     }
 }

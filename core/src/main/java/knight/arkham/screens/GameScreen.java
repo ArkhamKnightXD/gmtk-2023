@@ -67,13 +67,9 @@ public class GameScreen extends ScreenAdapter {
 
         player.update(deltaTime);
 
-        for (Enemy enemy : tileMap.getEnemies()) {
+        for (Enemy enemy : tileMap.getEnemies())
+            enemy.update();
 
-            if (player.getDistanceInBetween(enemy.getPixelPosition()) < 170)
-                enemy.getBody().setActive(true);
-
-            enemy.update(deltaTime);
-        }
 
         for (Platform platform : tileMap.getPlatforms()) {
 

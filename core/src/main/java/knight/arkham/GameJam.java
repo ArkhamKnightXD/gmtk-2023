@@ -17,6 +17,7 @@ public class GameJam extends Game {
     public Viewport viewport;
     public Box2DDebugRenderer debugRenderer;
     public boolean setToDispose;
+    public boolean resetStage;
 
     public GameJam() {
 
