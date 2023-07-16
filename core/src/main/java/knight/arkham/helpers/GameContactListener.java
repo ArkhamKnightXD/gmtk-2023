@@ -3,7 +3,6 @@ package knight.arkham.helpers;
 import com.badlogic.gdx.physics.box2d.*;
 import knight.arkham.objects.Enemy;
 import knight.arkham.objects.Player;
-import knight.arkham.objects.structures.Block;
 import knight.arkham.objects.structures.Checkpoint;
 import knight.arkham.objects.structures.FinishFlag;
 
@@ -31,14 +30,6 @@ public class GameContactListener implements ContactListener {
                     ((Enemy) fixtureB.getUserData()).hitOnHead();
                 break;
 
-            case PLAYER_HEAD_BIT | BRICK_BIT:
-
-                if (fixtureA.getFilterData().categoryBits == BRICK_BIT)
-                    ((Block) fixtureA.getUserData()).hitByPlayer();
-
-                else
-                    ((Block) fixtureB.getUserData()).hitByPlayer();
-                break;
 
             case PLAYER_BIT | ENEMY_BIT:
 

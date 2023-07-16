@@ -73,7 +73,7 @@ public class Player extends GameObject {
     }
 
     public void getHitByEnemy() {
-        applyLinealImpulse(new Vector2(500, 0));
+        applyLinealImpulse(new Vector2(-500, 0));
     }
 
     public float getDistanceInBetween(Vector2 finalPosition) {

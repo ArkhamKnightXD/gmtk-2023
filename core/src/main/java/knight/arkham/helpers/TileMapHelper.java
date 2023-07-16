@@ -10,7 +10,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import knight.arkham.objects.Enemy;
-import knight.arkham.objects.structures.Block;
 import knight.arkham.objects.structures.Checkpoint;
 import knight.arkham.objects.structures.FinishFlag;
 import knight.arkham.objects.structures.Platform;
@@ -58,10 +57,6 @@ public class TileMapHelper {
 
                 case "Enemies":
                     enemies.add(new Enemy(box2dRectangle, world));
-                    break;
-
-                case "Blocks":
-                    new Block(box2dRectangle, world, tiledMap);
                     break;
 
                 case "Checkpoints":

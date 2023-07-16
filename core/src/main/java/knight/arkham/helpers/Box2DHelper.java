@@ -3,7 +3,6 @@ package knight.arkham.helpers;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import knight.arkham.objects.Enemy;
 import knight.arkham.objects.Player;
 import knight.arkham.objects.structures.Checkpoint;
 import knight.arkham.objects.structures.FinishFlag;
@@ -25,12 +24,10 @@ public class Box2DHelper {
             fixtureDef.filter.categoryBits = FINISH_BIT;
 
         else
-            fixtureDef.filter.categoryBits = BRICK_BIT;
+            fixtureDef.filter.categoryBits = GROUND_BIT;
 
         Body body = createBox2DBodyByType(box2DBody);
 
-//        En tiempo de ejecución, por alguna razón el fixture siempre tiene el categoryBit en 1, pero al
-//        final donde se usa, tiene el categoryBit correspondiente a Brick_bit, asi que al fin de cuentas funciona bien.
         Fixture fixture = body.createFixture(fixtureDef);
 
         fixture.setUserData(box2DBody.userData);
@@ -64,16 +61,8 @@ public class Box2DHelper {
 
         if (box2DBody.userData instanceof Player)
             createPlayerBody(box2DBody, fixtureDef, body);
-
-        else if (box2DBody.userData instanceof Enemy)
+        else
             createEnemyBody(box2DBody, fixtureDef, body);
-
-        else {
-
-            fixtureDef.filter.categoryBits = GROUND_BIT;
-
-            body.createFixture(fixtureDef);
-        }
 
         shape.dispose();
 
@@ -95,7 +84,7 @@ public class Box2DHelper {
 
         fixtureDef.filter.categoryBits = ENEMY_BIT;
 
-        fixtureDef.filter.maskBits = (short) (GROUND_BIT | BRICK_BIT | ENEMY_BIT | PLAYER_BIT);
+        fixtureDef.filter.maskBits = (short) (GROUND_BIT | PINK_GROUND_BIT | ENEMY_BIT | PLAYER_BIT);
 
         body.createFixture(fixtureDef).setUserData(box2DBody.userData);
 
@@ -108,7 +97,6 @@ public class Box2DHelper {
 
         body.createFixture(fixtureDef).setUserData(box2DBody.userData);
 
-//        Los shapes deben de ser dispose luego de que el fixture se ha creado, si no el programa fallara.
         headCollider.dispose();
     }
 
@@ -129,37 +117,13 @@ public class Box2DHelper {
     }
 
 
-    private static EdgeShape getPlayerHeadCollider(FixtureDef fixtureDefinition) {
-
-        EdgeShape headCollider = new EdgeShape();
-
-        headCollider.set(new Vector2(-10 / PIXELS_PER_METER, 10 / PIXELS_PER_METER),
-            new Vector2(10 / PIXELS_PER_METER, 10 / PIXELS_PER_METER));
-
-        fixtureDefinition.shape = headCollider;
-
-        fixtureDefinition.isSensor = true;
-
-        fixtureDefinition.filter.categoryBits = PLAYER_HEAD_BIT;
-
-        return headCollider;
-    }
-
     private static void createPlayerBody(Box2DBody box2DBody, FixtureDef fixtureDef, Body body) {
 
         fixtureDef.filter.categoryBits = PLAYER_BIT;
 
-        fixtureDef.filter.maskBits = (short) (GROUND_BIT | BRICK_BIT | CHECKPOINT_BIT | FINISH_BIT | ENEMY_BIT | ENEMY_HEAD_BIT);
-
-        //Nota si se van a definir varios category y maskBit a varios cuerpos, tener pendiente, que se debe de crear fixture antes de agregar
-        // los demás mask y category al otro cuerpo
-        body.createFixture(fixtureDef).setUserData(box2DBody.userData);
-
-        EdgeShape headCollider = getPlayerHeadCollider(fixtureDef);
+        fixtureDef.filter.maskBits = (short) (GROUND_BIT | CHECKPOINT_BIT | FINISH_BIT | ENEMY_BIT | ENEMY_HEAD_BIT);
 
         body.createFixture(fixtureDef).setUserData(box2DBody.userData);
-
-        headCollider.dispose();
     }
 
     public static Rectangle getDrawBounds(Rectangle bounds, Body body){
