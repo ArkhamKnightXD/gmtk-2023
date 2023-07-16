@@ -38,7 +38,7 @@ public class GameScreen extends ScreenAdapter {
 
         world.setContactListener(contactListener);
 
-        player = new Player(new Rectangle(450, 100, 16, 16), world);
+        player = new Player(new Rectangle(400, 50, 16, 16), world);
 
         GameData gameDataToSave = new GameData("GameScreen", player.getWorldPosition());
         GameDataHelper.saveGameData(GAME_DATA_FILENAME, gameDataToSave);
@@ -60,13 +60,13 @@ public class GameScreen extends ScreenAdapter {
     }
 
 
-    private void update(float deltaTime) {
+    private void update() {
 
         world.step(1 / 60f, 6, 2);
 
         updateCameraPosition();
 
-        player.update(deltaTime);
+        player.update();
 
         for (Enemy enemy : tileMap.getEnemies())
             enemy.update();
@@ -94,7 +94,7 @@ public class GameScreen extends ScreenAdapter {
     @Override
     public void render(float delta) {
 
-        update(delta);
+        update();
 
         draw();
 

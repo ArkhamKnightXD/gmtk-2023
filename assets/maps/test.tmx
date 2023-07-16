@@ -1,15 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="320" height="40" tilewidth="16" tileheight="16" infinite="0" nextlayerid="12" nextobjectid="75">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="500" height="40" tilewidth="16" tileheight="16" infinite="0" nextlayerid="12" nextobjectid="106">
  <objectgroup id="7" name="Checkpoints">
-  <object id="65" x="2348" y="577.667" width="10" height="9.33333"/>
+  <object id="65" x="2348" y="577.667" width="8" height="8"/>
+  <object id="75" x="4780.52" y="574.146" width="8" height="8"/>
  </objectgroup>
  <objectgroup id="3" name="Enemies">
-  <object id="66" name="blue" x="908.333" y="575" width="16" height="16"/>
-  <object id="69" name="blue" x="4576.5" y="575.75" width="16" height="16"/>
-  <object id="70" name="blue" x="4655.75" y="576" width="16" height="16"/>
+  <object id="69" x="4576.5" y="575.75" width="16" height="16"/>
+  <object id="70" x="4655.75" y="576" width="16" height="16"/>
+  <object id="76" x="879.818" y="575.697" width="16" height="16"/>
+  <object id="79" x="4945.5" y="574.333" width="16" height="16"/>
+  <object id="80" x="5087.17" y="573.833" width="16" height="16"/>
+  <object id="81" x="5231.33" y="574.667" width="16" height="16"/>
+  <object id="82" x="5377" y="574" width="16" height="16"/>
+  <object id="83" x="5503.33" y="574" width="16" height="16"/>
+  <object id="84" x="5664.33" y="574" width="16" height="16"/>
+  <object id="87" x="5904.67" y="574.917" width="16" height="16"/>
+  <object id="89" x="6065" y="575.25" width="16" height="16"/>
+  <object id="90" x="6221" y="574.917" width="16" height="16"/>
+  <object id="91" x="6352.33" y="575.583" width="16" height="16"/>
  </objectgroup>
  <objectgroup id="5" name="FinishFlag">
-  <object id="53" x="4768.75" y="575.583" width="16" height="16"/>
+  <object id="77" x="7728.42" y="569.333" width="16" height="16"/>
  </objectgroup>
  <objectgroup id="4" name="Collisions">
   <object id="3" name="gray" x="0" y="591.667" width="639.75" height="47.8333"/>
@@ -31,7 +42,17 @@
   <object id="60" name="pink" x="2127.83" y="591.667" width="48" height="48.3333"/>
   <object id="61" name="pink" x="1807.67" y="592.166" width="48" height="47.3334"/>
   <object id="62" name="blue" x="2545" y="592.333" width="143" height="47.1667"/>
-  <object id="73" name="blue" x="4718.92" y="591.917" width="128.833" height="47.5"/>
+  <object id="73" name="gray" x="4718.92" y="591.917" width="128.833" height="47.5"/>
   <object id="74" name="pink" x="4575.92" y="591.917" width="96.333" height="47.5"/>
+  <object id="78" name="blue" x="4945.33" y="590.667" width="883.333" height="48.6667"/>
+  <object id="86" name="pink" x="5904.5" y="591.25" width="560.333" height="48.6667"/>
+  <object id="97" name="pink" x="6559" y="592.333" width="48.6667" height="47.6667"/>
+  <object id="98" name="blue" x="6720.42" y="591.75" width="48.6667" height="47.6667"/>
+  <object id="99" name="blue" x="6880.17" y="591.75" width="48.6667" height="47.6667"/>
+  <object id="100" name="pink" x="7040.42" y="591.75" width="48.6667" height="47.6667"/>
+  <object id="101" name="pink" x="7184.67" y="591.75" width="48.6667" height="47.6667"/>
+  <object id="102" name="blue" x="7342.67" y="591.75" width="48.6667" height="47.6667"/>
+  <object id="103" name="pink" x="7489.67" y="591.75" width="48.6667" height="47.6667"/>
+  <object id="104" name="gray" x="7633.67" y="591.25" width="175.667" height="47.6667"/>
  </objectgroup>
 </map>
