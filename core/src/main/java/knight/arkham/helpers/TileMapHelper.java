@@ -19,7 +19,6 @@ import static knight.arkham.helpers.Constants.MID_SCREEN_WIDTH;
 import static knight.arkham.helpers.Constants.PIXELS_PER_METER;
 
 public class TileMapHelper {
-
     private final World world;
     private final TiledMap tiledMap;
     private final Array<Enemy> enemies;
@@ -38,7 +37,8 @@ public class TileMapHelper {
         checkpoints = new Array<>();
     }
 
-    public OrthogonalTiledMapRenderer setupMap() {
+//    Because, I'm not using the tileset, I don't have to use a mapRenderer
+    public void setupMap() {
 
         MapLayers mapLayers = tiledMap.getLayers();
 
@@ -47,7 +47,7 @@ public class TileMapHelper {
             parseMapObjectsToBox2DBodies(mapLayer.getObjects(), mapLayer.getName());
         }
 
-        return new OrthogonalTiledMapRenderer(tiledMap, 1 / PIXELS_PER_METER);
+        new OrthogonalTiledMapRenderer(tiledMap, 1 / PIXELS_PER_METER);
     }
 
     private void parseMapObjectsToBox2DBodies(MapObjects mapObjects, String objectsName) {

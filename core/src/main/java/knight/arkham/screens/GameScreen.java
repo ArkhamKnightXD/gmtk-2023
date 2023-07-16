@@ -5,7 +5,6 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
@@ -24,10 +23,8 @@ public class GameScreen extends ScreenAdapter {
     private final GameJam game;
     private final OrthographicCamera camera;
     private final World world;
-    private final OrthogonalTiledMapRenderer mapRenderer;
     private final Player player;
     private final TileMapHelper tileMap;
-    private boolean isDebug;
     private final Music music;
 
     public GameScreen() {
@@ -48,7 +45,7 @@ public class GameScreen extends ScreenAdapter {
 
         tileMap = new TileMapHelper(world, "maps/playground/test.tmx");
 
-        mapRenderer = tileMap.setupMap();
+        tileMap.setupMap();
         music = AssetsHelper.loadMusic("pixel3.mp3");
 
         music.play();
@@ -74,15 +71,11 @@ public class GameScreen extends ScreenAdapter {
         for (Enemy enemy : tileMap.getEnemies())
             enemy.update();
 
-
         for (Platform platform : tileMap.getPlatforms()) {
 
             if (Gdx.input.isKeyJustPressed(Input.Keys.C))
                 platform.changeColor();
         }
-
-        if (Gdx.input.isKeyJustPressed(Input.Keys.F1))
-            isDebug = !isDebug;
 
         game.manageExitTheGame();
     }
@@ -110,10 +103,6 @@ public class GameScreen extends ScreenAdapter {
     private void draw() {
 
         ScreenUtils.clear(0, 0, 0, 0);
-
-        mapRenderer.setView(camera);
-
-        mapRenderer.render();
 
         game.batch.setProjectionMatrix(camera.combined);
 
