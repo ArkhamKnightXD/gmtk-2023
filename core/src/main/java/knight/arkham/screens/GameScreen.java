@@ -42,7 +42,7 @@ public class GameScreen extends ScreenAdapter {
 
         world.setContactListener(contactListener);
 
-        player = new Player(new Rectangle(450, 60, 16, 16), world);
+        player = new Player(new Rectangle(450, 100, 16, 16), world);
 
         GameData gameDataToSave = new GameData("GameScreen", player.getWorldPosition());
         GameDataHelper.saveGameData(GAME_DATA_FILENAME, gameDataToSave);

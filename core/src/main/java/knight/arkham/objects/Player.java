@@ -16,7 +16,6 @@ import knight.arkham.helpers.GameDataHelper;
 import static knight.arkham.helpers.Constants.GAME_DATA_FILENAME;
 
 public class Player extends GameObject {
-    private int jumpCounter;
 
     public Player(Rectangle bounds, World world) {
         super(
@@ -39,23 +38,17 @@ public class Player extends GameObject {
 
     public void update(float deltaTime) {
 
-        if (body.getLinearVelocity().x <= 10)
+//        if (body.getLinearVelocity().x <= 10)
+//            applyLinealImpulse(new Vector2(5, 0));
+
+        if (Gdx.input.isKeyPressed(Input.Keys.D) && body.getLinearVelocity().x <= 10)
             applyLinealImpulse(new Vector2(5, 0));
 
-//        if (Gdx.input.isKeyPressed(Input.Keys.D) && body.getLinearVelocity().x <= 10)
-//            applyLinealImpulse(new Vector2(5, 0));
-//
-//        else if (Gdx.input.isKeyPressed(Input.Keys.A) && body.getLinearVelocity().x >= -10)
-//            applyLinealImpulse(new Vector2(-5, 0));
+        else if (Gdx.input.isKeyPressed(Input.Keys.A) && body.getLinearVelocity().x >= -10)
+            applyLinealImpulse(new Vector2(-5, 0));
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && jumpCounter < 2){
-            applyLinealImpulse(new Vector2(0, 140));
-
-            jumpCounter++;
-        }
-
-        if (body.getLinearVelocity().y == 0)
-            jumpCounter = 0;
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && body.getLinearVelocity().y == 0)
+            applyLinealImpulse(new Vector2(0, 170));
 
         playerFallToDead();
     }

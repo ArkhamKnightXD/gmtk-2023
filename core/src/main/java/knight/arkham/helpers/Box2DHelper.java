@@ -101,7 +101,7 @@ public class Box2DHelper {
 
         fixtureDef.shape = headCollider;
 
-        fixtureDef.restitution = 1;
+        fixtureDef.restitution = 0.6f;
         fixtureDef.filter.categoryBits = ENEMY_HEAD_BIT;
 
         body.createFixture(fixtureDef).setUserData(box2DBody.userData);
