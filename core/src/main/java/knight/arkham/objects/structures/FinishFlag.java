@@ -21,7 +21,7 @@ public class FinishFlag extends InteractiveStructure {
     public FinishFlag(Rectangle rectangle, World world) {
         super(rectangle, world);
 
-        sprite = new Texture("images/flag.png");
+        sprite = new Texture("images/gray.jpg");
 
         drawBounds = Box2DHelper.getDrawBounds(rectangle, body);
     }
