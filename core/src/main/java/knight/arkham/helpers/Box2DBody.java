@@ -12,18 +12,10 @@ public class Box2DBody {
     public World world;
     public Object userData;
 
-    public Box2DBody(Rectangle bounds, BodyDef.BodyType bodyType, float density, World world, Object userData) {
+    public Box2DBody(Rectangle bounds, float density, World world, Object userData) {
         this.bounds = bounds;
-        this.bodyType = bodyType;
+        this.bodyType = density > 0 ? BodyDef.BodyType.DynamicBody : BodyDef.BodyType.StaticBody;
         this.density = density;
-        this.world = world;
-        this.userData = userData;
-    }
-
-    public Box2DBody(Rectangle bounds, World world, Object userData) {
-        this.bounds = bounds;
-        this.bodyType = BodyDef.BodyType.StaticBody;
-        this.density = 0;
         this.world = world;
         this.userData = userData;
     }

@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.World;
 import knight.arkham.GameJam;
 import knight.arkham.helpers.Box2DBody;
@@ -29,11 +28,7 @@ public class Player extends GameObject {
     protected Body createBody() {
 
         return Box2DHelper.createBody(
-
-            new Box2DBody(
-                actualBounds, BodyDef.BodyType.DynamicBody,
-                10, actualWorld, this
-            )
+            new Box2DBody(actualBounds, 10, actualWorld, this)
         );
     }
 
