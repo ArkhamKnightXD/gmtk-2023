@@ -3,7 +3,6 @@ package knight.arkham.helpers;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import knight.arkham.objects.Enemy;
 import knight.arkham.objects.Player;
 import knight.arkham.objects.structures.Checkpoint;
 import knight.arkham.objects.structures.FinishFlag;
@@ -63,15 +62,8 @@ public class Box2DHelper {
         if (box2DBody.userData instanceof Player)
             createPlayerBody(box2DBody, fixtureDef, body);
 
-        else if (box2DBody.userData instanceof Enemy)
+        else
             createEnemyBody(box2DBody, fixtureDef, body);
-
-        else {
-
-            fixtureDef.filter.categoryBits = GROUND_BIT;
-
-            body.createFixture(fixtureDef);
-        }
 
         shape.dispose();
 
@@ -93,7 +85,7 @@ public class Box2DHelper {
 
         fixtureDef.filter.categoryBits = ENEMY_BIT;
 
-        fixtureDef.filter.maskBits = (short) (GROUND_BIT | PINK_GROUND_BIT | BLUE_GROUND_BIT | ENEMY_BIT | PLAYER_BIT);
+        fixtureDef.filter.maskBits = (short) (GROUND_BIT | PINK_GROUND_BIT | ENEMY_BIT | PLAYER_BIT);
 
         body.createFixture(fixtureDef).setUserData(box2DBody.userData);
 
@@ -130,7 +122,7 @@ public class Box2DHelper {
 
         fixtureDef.filter.categoryBits = PLAYER_BIT;
 
-        fixtureDef.filter.maskBits = (short) (GROUND_BIT | BLUE_GROUND_BIT | CHECKPOINT_BIT | FINISH_BIT | ENEMY_BIT | ENEMY_HEAD_BIT);
+        fixtureDef.filter.maskBits = (short) (GROUND_BIT | CHECKPOINT_BIT | FINISH_BIT | ENEMY_BIT | ENEMY_HEAD_BIT);
 
         body.createFixture(fixtureDef).setUserData(box2DBody.userData);
     }

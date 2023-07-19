@@ -13,7 +13,7 @@ public abstract class InteractiveStructure {
     protected final World actualWorld;
     protected final Fixture fixture;
     protected final Body body;
-    protected final Rectangle drawBounds;
+    private final Rectangle drawBounds;
 
     public InteractiveStructure(Rectangle rectangle, World world) {
 
