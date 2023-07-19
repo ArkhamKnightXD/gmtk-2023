@@ -7,7 +7,6 @@
  <objectgroup id="3" name="Enemies">
   <object id="69" x="4576.5" y="575.75" width="16" height="16"/>
   <object id="70" x="4655.75" y="576" width="16" height="16"/>
-  <object id="76" x="879.818" y="575.697" width="16" height="16"/>
   <object id="79" x="4945.5" y="574.333" width="16" height="16"/>
   <object id="80" x="5087.17" y="573.833" width="16" height="16"/>
   <object id="81" x="5231.33" y="574.667" width="16" height="16"/>

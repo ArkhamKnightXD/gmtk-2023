@@ -14,20 +14,17 @@ import knight.arkham.helpers.Box2DHelper;
 import static knight.arkham.helpers.Constants.DESTROYED_BIT;
 
 public class FinishFlag extends InteractiveStructure {
-    private final Rectangle drawBounds;
     private final Texture sprite;
 
     public FinishFlag(Rectangle rectangle, World world) {
         super(rectangle, world);
 
         sprite = new Texture("images/gray.jpg");
-
-        drawBounds = Box2DHelper.getDrawBounds(rectangle, body);
     }
 
     public void draw(Batch batch) {
 
-        batch.draw(sprite, drawBounds.x, drawBounds.y, drawBounds.width, drawBounds.height);
+        super.draw(batch, sprite);
     }
 
     @Override

@@ -14,10 +14,8 @@ import knight.arkham.helpers.Box2DHelper;
 import static knight.arkham.helpers.Constants.*;
 
 public class Platform extends InteractiveStructure {
-
     private final Texture blueSprite;
     private final Texture pinkSprite;
-    private final Rectangle drawBounds;
     private boolean isBlue;
     public Platform(Rectangle rectangle, World world, boolean isBlue) {
         super(rectangle, world);
@@ -35,17 +33,14 @@ public class Platform extends InteractiveStructure {
 
         blueSprite = new Texture("images/blue.jpg");
         pinkSprite = new Texture("images/pink.jpg");
-
-        drawBounds = Box2DHelper.getDrawBounds(rectangle, body);
     }
 
     public void draw(Batch batch) {
 
         if (isBlue)
-            batch.draw(blueSprite, drawBounds.x, drawBounds.y, drawBounds.width, drawBounds.height);
+            super.draw(batch, blueSprite);
         else
-            batch.draw(pinkSprite, drawBounds.x, drawBounds.y, drawBounds.width, drawBounds.height);
-
+            super.draw(batch, pinkSprite);
     }
 
     @Override

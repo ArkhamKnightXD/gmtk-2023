@@ -34,14 +34,11 @@ public abstract class GameObject {
         batch.draw(actualRegion, drawBounds.x, drawBounds.y, drawBounds.width, drawBounds.height);
     }
 
-    public Body getBody() {return body;}
-
     protected void applyLinealImpulse(Vector2 impulseDirection) {
         body.applyLinearImpulse(impulseDirection, body.getWorldCenter(), true);
     }
 
     public Vector2 getPixelPosition() {
-
         return new Vector2(body.getPosition().x * PIXELS_PER_METER, body.getPosition().y * PIXELS_PER_METER);
     }
 

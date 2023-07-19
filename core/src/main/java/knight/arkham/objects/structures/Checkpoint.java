@@ -13,7 +13,6 @@ import static knight.arkham.helpers.Constants.DESTROYED_BIT;
 import static knight.arkham.helpers.Constants.GAME_DATA_FILENAME;
 
 public class Checkpoint extends InteractiveStructure {
-    private final Rectangle drawBounds;
     private final Texture sprite;
     private boolean isDestroyed;
 
@@ -21,14 +20,12 @@ public class Checkpoint extends InteractiveStructure {
         super(rectangle, world);
 
         sprite = new Texture("images/gray.jpg");
-
-        drawBounds = Box2DHelper.getDrawBounds(rectangle, body);
     }
 
     public void draw(Batch batch) {
 
         if (!isDestroyed)
-            batch.draw(sprite, drawBounds.x, drawBounds.y, drawBounds.width, drawBounds.height);
+            super.draw(batch, sprite);
     }
 
     @Override
