@@ -17,7 +17,7 @@ import knight.arkham.objects.structures.Checkpoint;
 import knight.arkham.objects.structures.NeutralPlatform;
 import knight.arkham.objects.structures.Platform;
 
-import static knight.arkham.helpers.Constants.GAME_DATA_FILENAME;
+import static knight.arkham.helpers.Constants.*;
 
 public class GameScreen extends ScreenAdapter {
     private final GameJam game;
@@ -26,6 +26,7 @@ public class GameScreen extends ScreenAdapter {
     private final Player player;
     private final TileMapHelper tileMap;
     private final Music music;
+    private boolean isPaused;
 
     public GameScreen() {
         game = GameJam.INSTANCE;
@@ -49,7 +50,7 @@ public class GameScreen extends ScreenAdapter {
         music = AssetsHelper.loadMusic("pixel3.mp3");
 
         music.play();
-        music.setVolume(0.4f);
+        music.setVolume(0.3f);
         music.setLooping(true);
     }
 
@@ -58,7 +59,6 @@ public class GameScreen extends ScreenAdapter {
 
         game.viewport.update(width, height);
     }
-
 
     private void update() {
 
@@ -94,10 +94,20 @@ public class GameScreen extends ScreenAdapter {
     @Override
     public void render(float delta) {
 
-        update();
+        if (Gdx.input.isKeyJustPressed(Input.Keys.F1))
+            isPaused = !isPaused;
 
-        draw();
+        if (!isPaused){
+            music.setVolume(0.3f);
 
+            update();
+            draw();
+        }
+        else{
+
+            music.setVolume(0.1f);
+            drawPause();
+        }
     }
 
     private void draw() {
@@ -126,6 +136,23 @@ public class GameScreen extends ScreenAdapter {
 
         game.batch.end();
     }
+
+    private void drawPause() {
+
+        ScreenUtils.clear(0, 0, 0, 0);
+
+        camera.position.set(10,10,0);
+        camera.update();
+
+        game.batch.setProjectionMatrix(camera.combined);
+
+        game.batch.begin();
+
+        game.font.draw(game.batch, "Pause ", 0, 15);
+
+        game.batch.end();
+    }
+
 
     @Override
     public void hide() {

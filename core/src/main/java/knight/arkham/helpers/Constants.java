@@ -6,7 +6,7 @@ public class Constants {
 
     public static final String GAME_DATA_FILENAME = "jammin";
 
-    public static final float PIXELS_PER_METER = 16;
+    public static final float PIXELS_PER_METER = 16f;
     public static final int MID_SCREEN_WIDTH = Gdx.graphics.getWidth() / 2;
 
     public static final short NOTHING_BIT = 0;
