@@ -50,7 +50,6 @@ public class GameScreen extends ScreenAdapter {
         music = AssetsHelper.loadMusic("pixel3.mp3");
 
         music.play();
-        music.setVolume(0.3f);
         music.setLooping(true);
     }
 
@@ -99,15 +98,12 @@ public class GameScreen extends ScreenAdapter {
 
         if (!isPaused){
             music.setVolume(0.3f);
-
             update();
-            draw();
         }
-        else{
-
+        else
             music.setVolume(0.1f);
-            drawPause();
-        }
+
+        draw();
     }
 
     private void draw() {
@@ -137,21 +133,6 @@ public class GameScreen extends ScreenAdapter {
         game.batch.end();
     }
 
-    private void drawPause() {
-
-        ScreenUtils.clear(0, 0, 0, 0);
-
-        camera.position.set(10,10,0);
-        camera.update();
-
-        game.batch.setProjectionMatrix(camera.combined);
-
-        game.batch.begin();
-
-        game.font.draw(game.batch, "Pause ", 0, 15);
-
-        game.batch.end();
-    }
 
 
     @Override

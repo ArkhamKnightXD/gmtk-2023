@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import knight.arkham.screens.GameScreen;
+import knight.arkham.screens.MainMenuScreen;
 
 public class GameJam extends Game {
     public static GameJam INSTANCE;
@@ -37,7 +37,7 @@ public class GameJam extends Game {
 
         viewport = new FitViewport(screenWidth / 32f, screenHeight / 32f, globalCamera);
 
-        setScreen(new GameScreen());
+        setScreen(new MainMenuScreen());
     }
 
     public void manageExitTheGame() {
