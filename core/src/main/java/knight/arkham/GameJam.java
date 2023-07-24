@@ -40,7 +40,7 @@ public class GameJam extends Game {
         setScreen(new MainMenuScreen());
     }
 
-    public void manageExitTheGame() {
+    public void closeTheGame() {
 
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE))
             Gdx.app.exit();

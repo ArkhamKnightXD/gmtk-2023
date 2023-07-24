@@ -20,23 +20,14 @@ import static knight.arkham.helpers.Constants.FULL_SCREEN_HEIGHT;
 import static knight.arkham.helpers.Constants.FULL_SCREEN_WIDTH;
 
 public class MainMenuScreen extends ScreenAdapter {
-
+    private final GameJam game;
     private final Skin skin;
     private final Stage stage;
-
     private final Table table;
-
     private final Viewport viewport;
     public MainMenuScreen() {
-        viewport = new ExtendViewport(FULL_SCREEN_WIDTH, FULL_SCREEN_HEIGHT);
 
-        stage = new Stage(viewport);
-
-        table = new Table();
-
-        table.setFillParent(true);
-
-        stage.addActor(table);
+        game = GameJam.INSTANCE;
 
         AssetManager assetManager = new AssetManager();
 
@@ -48,16 +39,34 @@ public class MainMenuScreen extends ScreenAdapter {
 
         skin = assetManager.get(uiSkin);
 
+//        For menu screen the extendViewport is highly recommended
+        viewport = new ExtendViewport(FULL_SCREEN_WIDTH, FULL_SCREEN_HEIGHT);
+
+        stage = new Stage(viewport);
+
+        table = new Table();
+
+        table.setFillParent(true);
+
+        stage.addActor(table);
+
         addButton("Play").addListener(new ClickListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                GameJam.INSTANCE.setScreen(new GameScreen());
+                game.setScreen(new GameScreen());
                 return super.touchDown(event, x, y, pointer, button);
             }
         });
         addButton("Options");
         addButton("Credits");
-        addButton("Quit");
+
+        addButton("Quit").addListener(new ClickListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                Gdx.app.exit();
+                return super.touchDown(event, x, y, pointer, button);
+            }
+        });
 
         //De esta forma agrego que mi stage reaccione al hover y click del mouse.
         Gdx.input.setInputProcessor(stage);
@@ -68,14 +77,13 @@ public class MainMenuScreen extends ScreenAdapter {
         TextButton textButton = new TextButton(buttonName, skin);
 
 //        De esta forma indico que mi botón ocupara la fila completa y quiero agregarle un padding bottom de 10
-        table.add(textButton).width(400).height(60).padBottom(10);
+        table.add(textButton).width(400).height(60).padBottom(15);
         table.row();
 
         return textButton;
     }
     @Override
     public void resize(int width, int height) {
-
         viewport.update(width, height);
     }
 
@@ -84,18 +92,19 @@ public class MainMenuScreen extends ScreenAdapter {
 
         ScreenUtils.clear(0, 0, 0, 0);
 
-
         stage.act();
         stage.draw();
     }
 
     @Override
     public void hide() {
-
+        dispose();
     }
 
     @Override
     public void dispose() {
 
+        stage.dispose();
+        skin.dispose();
     }
 }

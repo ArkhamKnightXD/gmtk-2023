@@ -3,7 +3,6 @@ package knight.arkham.objects;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -20,12 +19,10 @@ public class Enemy extends GameObject {
     private boolean isDestroyed;
     private final Vector2 initialPosition;
 
-    public Enemy(Rectangle rectangle, World world) {
-        super(
-            rectangle, world,
-            new TextureRegion(new Texture("images/gray.jpg"), 0, 0, 16, 16)
-        );
-        initialPosition = new Vector2(rectangle.x/ PIXELS_PER_METER, rectangle.y/ PIXELS_PER_METER);
+    public Enemy(Rectangle bounds, World world) {
+        super(bounds, world, new Texture("images/gray.jpg"));
+
+        initialPosition = new Vector2(bounds.x/ PIXELS_PER_METER, bounds.y/ PIXELS_PER_METER);
     }
 
     @Override

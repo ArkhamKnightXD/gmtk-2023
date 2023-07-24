@@ -41,8 +41,7 @@ public class GameScreen extends ScreenAdapter {
 
         player = new Player(new Rectangle(400, 50, 16, 16), world);
 
-        GameData gameDataToSave = new GameData("GameScreen", player.getWorldPosition());
-        GameDataHelper.saveGameData(GAME_DATA_FILENAME, gameDataToSave);
+        GameDataHelper.saveGameData(GAME_DATA_FILENAME, player.getWorldPosition());
 
         tileMap = new TileMapHelper(world, "maps/test.tmx");
 
@@ -70,13 +69,7 @@ public class GameScreen extends ScreenAdapter {
         for (Enemy enemy : tileMap.getEnemies())
             enemy.update();
 
-        for (Platform platform : tileMap.getPlatforms()) {
-
-            if (Gdx.input.isKeyJustPressed(Input.Keys.C))
-                platform.changeColor();
-        }
-
-        game.manageExitTheGame();
+        game.closeTheGame();
     }
 
     private void updateCameraPosition() {
@@ -95,6 +88,9 @@ public class GameScreen extends ScreenAdapter {
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.F1))
             isPaused = !isPaused;
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.F2))
+            game.setScreen(new MainMenuScreen());
 
         if (!isPaused){
             music.setVolume(0.3f);
@@ -119,8 +115,13 @@ public class GameScreen extends ScreenAdapter {
         for (Enemy enemy : tileMap.getEnemies())
             enemy.draw(game.batch);
 
-        for (Platform platform : tileMap.getPlatforms())
+        for (Platform platform : tileMap.getPlatforms()){
+
+            if (Gdx.input.isKeyJustPressed(Input.Keys.C))
+                platform.changeColor();
+
             platform.draw(game.batch);
+        }
 
         for (NeutralPlatform neutralPlatform : tileMap.getNeutralPlatforms())
             neutralPlatform.draw(game.batch);

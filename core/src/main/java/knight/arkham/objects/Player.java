@@ -3,7 +3,6 @@ package knight.arkham.objects;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -18,10 +17,7 @@ import static knight.arkham.helpers.Constants.GAME_DATA_FILENAME;
 public class Player extends GameObject {
 
     public Player(Rectangle bounds, World world) {
-        super(
-            bounds, world,
-            new TextureRegion(new Texture("images/white.jpg"), 0, 0, 16, 16)
-        );
+        super(bounds, world, new Texture("images/white.jpg"));
     }
 
     @Override
@@ -49,7 +45,7 @@ public class Player extends GameObject {
 
             body.setLinearVelocity(0, 0);
 
-            Vector2 position = GameDataHelper.loadGameData(GAME_DATA_FILENAME).position;
+            Vector2 position = GameDataHelper.loadGameData(GAME_DATA_FILENAME);
 
             body.setTransform(position, 0);
 

@@ -46,8 +46,7 @@ public class Checkpoint extends InteractiveStructure {
         Sound sound = AssetsHelper.loadSound("okay.wav");
         sound.play();
 
-        GameData gameDataToSave = new GameData("GameScreen", body.getPosition());
-        GameDataHelper.saveGameData(GAME_DATA_FILENAME, gameDataToSave);
+        GameDataHelper.saveGameData(GAME_DATA_FILENAME, body.getPosition());
 
         isDestroyed = true;
     }

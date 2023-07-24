@@ -20,7 +20,6 @@ public class GameContactListener implements ContactListener {
 
         switch (collisionDefinition) {
 
-//            Esto al final es una suma asi que no importa el orden de los valores
             case PLAYER_BIT | ENEMY_HEAD_BIT:
 
                 if (fixtureA.getFilterData().categoryBits == ENEMY_HEAD_BIT)

@@ -1,7 +1,7 @@
 package knight.arkham.objects;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -14,13 +14,13 @@ public abstract class GameObject {
     protected final Rectangle actualBounds;
     protected final World actualWorld;
     protected final Body body;
-    private final TextureRegion actualRegion;
+    private final Texture sprite;
 
-    protected GameObject(Rectangle bounds, World world, TextureRegion region) {
+    protected GameObject(Rectangle bounds, World world, Texture texture) {
 
         actualBounds = bounds;
         actualWorld = world;
-        actualRegion = region;
+        sprite = texture;
 
         body = createBody();
     }
@@ -31,7 +31,7 @@ public abstract class GameObject {
 
         Rectangle drawBounds = Box2DHelper.getDrawBounds(actualBounds, body);
 
-        batch.draw(actualRegion, drawBounds.x, drawBounds.y, drawBounds.width, drawBounds.height);
+        batch.draw(sprite, drawBounds.x, drawBounds.y, drawBounds.width, drawBounds.height);
     }
 
     protected void applyLinealImpulse(Vector2 impulseDirection) {
@@ -44,5 +44,5 @@ public abstract class GameObject {
 
     public Vector2 getWorldPosition() {return body.getPosition();}
 
-    public void dispose() {actualRegion.getTexture().dispose();}
+    public void dispose() {sprite.dispose();}
 }
