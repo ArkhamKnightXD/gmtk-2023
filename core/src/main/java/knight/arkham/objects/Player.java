@@ -13,6 +13,7 @@ import knight.arkham.helpers.Box2DHelper;
 import knight.arkham.helpers.GameDataHelper;
 
 import static knight.arkham.helpers.Constants.GAME_DATA_FILENAME;
+import static knight.arkham.helpers.Constants.PIXELS_PER_METER;
 
 public class Player extends GameObject {
 
@@ -53,6 +54,15 @@ public class Player extends GameObject {
         }
     }
 
+    public Vector2 getWorldPosition() {return body.getPosition();}
+
+    public Vector2 getPixelPosition() {
+        return new Vector2(body.getPosition().x * PIXELS_PER_METER, body.getPosition().y * PIXELS_PER_METER);
+    }
+
+    public void applyLinealImpulse(Vector2 impulseDirection) {
+        body.applyLinearImpulse(impulseDirection, body.getWorldCenter(), true);
+    }
     public void getHitByEnemy() {
         applyLinealImpulse(new Vector2(-5000, 0));
     }
