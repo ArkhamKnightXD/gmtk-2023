@@ -89,7 +89,6 @@ public class GameScreen extends ScreenAdapter {
         camera.update();
     }
 
-
     @Override
     public void render(float deltaTime) {
 
@@ -97,9 +96,6 @@ public class GameScreen extends ScreenAdapter {
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.F1))
             isGamePaused = !isGamePaused;
-
-        if (Gdx.input.isKeyJustPressed(Input.Keys.F2))
-            game.setScreen(new MainMenuScreen());
 
         if (!isGamePaused){
             music.setVolume(0.3f);
@@ -158,7 +154,6 @@ public class GameScreen extends ScreenAdapter {
             accumulator -= TIME_STEP;
         }
     }
-
 
     @Override
     public void hide() {
