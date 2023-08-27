@@ -103,7 +103,7 @@ public class GameScreen extends ScreenAdapter {
             update();
             draw();
 
-            calculatePhysicsTimeStep(deltaTime);
+            doPhysicsTimeStep(deltaTime);
         }
         else{
             music.setVolume(0.1f);
@@ -143,7 +143,7 @@ public class GameScreen extends ScreenAdapter {
         game.batch.end();
     }
 
-    private void calculatePhysicsTimeStep(float deltaTime) {
+    private void doPhysicsTimeStep(float deltaTime) {
 
         float frameTime = Math.min(deltaTime, 0.25f);
 
