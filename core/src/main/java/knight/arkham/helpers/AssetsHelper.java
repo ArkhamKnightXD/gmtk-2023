@@ -1,8 +1,11 @@
 package knight.arkham.helpers;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import knight.arkham.GameJam;
 
 public class AssetsHelper {
 
@@ -12,5 +15,16 @@ public class AssetsHelper {
 
     public static Music loadMusic(String filenamePath){
         return Gdx.audio.newMusic(Gdx.files.internal("music/"+ filenamePath));
+    }
+
+    public static Skin loadUiSkin() {
+
+        AssetManager assetManager = new AssetManager();
+
+        assetManager.load(GameJam.INSTANCE.uiSkin);
+
+        assetManager.finishLoading();
+
+        return assetManager.get(GameJam.INSTANCE.uiSkin);
     }
 }

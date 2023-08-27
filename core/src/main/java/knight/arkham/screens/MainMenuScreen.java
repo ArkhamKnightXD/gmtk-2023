@@ -16,9 +16,6 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import knight.arkham.GameJam;
 
-import static knight.arkham.helpers.Constants.FULL_SCREEN_HEIGHT;
-import static knight.arkham.helpers.Constants.FULL_SCREEN_WIDTH;
-
 public class MainMenuScreen extends ScreenAdapter {
     private final GameJam game;
     private final Skin skin;
@@ -40,7 +37,7 @@ public class MainMenuScreen extends ScreenAdapter {
         skin = assetManager.get(uiSkin);
 
 //        For menu screen the extendViewport is highly recommended
-        viewport = new ExtendViewport(FULL_SCREEN_WIDTH, FULL_SCREEN_HEIGHT);
+        viewport = new ExtendViewport(game.screenWidth, game.screenHeight);
 
         stage = new Stage(viewport);
 
@@ -57,8 +54,6 @@ public class MainMenuScreen extends ScreenAdapter {
                 return super.touchDown(event, x, y, pointer, button);
             }
         });
-        addButton("Options");
-        addButton("Credits");
 
         addButton("Quit").addListener(new ClickListener() {
             @Override

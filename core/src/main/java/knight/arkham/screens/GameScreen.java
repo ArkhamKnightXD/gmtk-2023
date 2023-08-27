@@ -16,6 +16,7 @@ import knight.arkham.objects.Player;
 import knight.arkham.objects.structures.Checkpoint;
 import knight.arkham.objects.structures.NeutralPlatform;
 import knight.arkham.objects.structures.Platform;
+import knight.arkham.scenes.PauseMenu;
 
 import static knight.arkham.helpers.Constants.*;
 
@@ -26,12 +27,17 @@ public class GameScreen extends ScreenAdapter {
     private final Player player;
     private final TileMapHelper tileMap;
     private final Music music;
-    private boolean isPaused;
+    public static boolean isGamePaused;
+    private final PauseMenu pauseMenu;
+    private float accumulator;
+    private final float TIME_STEP;
 
     public GameScreen() {
         game = GameJam.INSTANCE;
 
         camera = game.globalCamera;
+
+        TIME_STEP = 1/240f;
 
         world = new World(new Vector2(0, -40), true);
 
@@ -50,6 +56,9 @@ public class GameScreen extends ScreenAdapter {
 
         music.play();
         music.setLooping(true);
+        pauseMenu = new PauseMenu();
+
+        isGamePaused = false;
     }
 
     @Override
@@ -59,8 +68,6 @@ public class GameScreen extends ScreenAdapter {
     }
 
     private void update() {
-
-        world.step(1 / 60f, 6, 2);
 
         updateCameraPosition();
 
@@ -84,27 +91,33 @@ public class GameScreen extends ScreenAdapter {
 
 
     @Override
-    public void render(float delta) {
+    public void render(float deltaTime) {
+
+        ScreenUtils.clear(0, 0, 0, 0);
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.F1))
-            isPaused = !isPaused;
+            isGamePaused = !isGamePaused;
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.F2))
             game.setScreen(new MainMenuScreen());
 
-        if (!isPaused){
+        if (!isGamePaused){
             music.setVolume(0.3f);
+
             update();
+            draw();
+
+            calculatePhysicsTimeStep(deltaTime);
         }
-        else
+        else{
             music.setVolume(0.1f);
 
-        draw();
+            pauseMenu.stage.act();
+            pauseMenu.stage.draw();
+        }
     }
 
     private void draw() {
-
-        ScreenUtils.clear(0, 0, 0, 0);
 
         game.batch.setProjectionMatrix(camera.combined);
 
@@ -134,6 +147,17 @@ public class GameScreen extends ScreenAdapter {
         game.batch.end();
     }
 
+    private void calculatePhysicsTimeStep(float deltaTime) {
+
+        float frameTime = Math.min(deltaTime, 0.25f);
+
+        accumulator += frameTime;
+
+        while(accumulator >= TIME_STEP) {
+            world.step(TIME_STEP, 6,2);
+            accumulator -= TIME_STEP;
+        }
+    }
 
 
     @Override
@@ -148,6 +172,7 @@ public class GameScreen extends ScreenAdapter {
         player.dispose();
         tileMap.getFinishFlag().dispose();
         music.dispose();
+        pauseMenu.dispose();
 
         for (Enemy enemy : tileMap.getEnemies())
             enemy.dispose();

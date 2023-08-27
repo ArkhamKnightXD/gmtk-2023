@@ -32,7 +32,7 @@ public class Player extends GameObject {
     public void update() {
 
         if (body.getLinearVelocity().x <= 10)
-            applyLinealImpulse(new Vector2(5, 0));
+            applyLinealImpulse(new Vector2(10, 0));
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && body.getLinearVelocity().y == 0)
             applyLinealImpulse(new Vector2(0, 170));

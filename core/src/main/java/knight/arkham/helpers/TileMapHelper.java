@@ -106,9 +106,7 @@ public class TileMapHelper {
         return playerPixelPosition.x > MID_SCREEN_WIDTH && playerPixelPosition.x < mapPixelWidth - MID_SCREEN_WIDTH;
     }
 
-    public Array<Enemy> getEnemies() {
-        return enemies;
-    }
+    public Array<Enemy> getEnemies() {return enemies;}
 
     public Array<Platform> getPlatforms() {return platforms;}
 
